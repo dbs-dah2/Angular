@@ -1,0 +1,97 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <div class="row">
+      <div style="text-align:center">
+          <h1>
+            Welcome {{ title }} {{ name }} ...!!
+          </h1>
+          <app-like></app-like>
+        </div>
+  </div>
+</div>
+<div class="container" style="float:center">
+  <div class="row">
+    <input [(ngModel)] = "actorName" 
+      type = "text" 
+      name="actorName" 
+      id="actorName"
+      (change) = onActorNameChange()>
+  </div>
+</div>
+<div class="container" style="float:center">
+    <div class="row">
+        <h3>{{actorName}}</h3>
+      </div>
+</div>
+<ng-container *ngIf="fav.length > 0;
+                else elseTemplate">
+
+  <div class="row">
+    <div class="col-md-4" *ngFor="let f of fav" style="width: 25rem;height: 20%;">
+      <div class="card">
+        <div class="card-body"
+          [style.color] = "'white'"
+          [style.backgroundColor] = "f.age > 30? 'tomato':'goldenrod'"
+        >
+            <div class="card-header"
+              [class.bg-success] = "f.active"
+              [class.bg-primary] = "!f.active">
+             {{f.name}} </div>
+            <p *ngIf="f.active" class = "badge badge-primary">Active</p>
+            <div class="card-body">
+              <p class="card-text">Id : {{f.id}}</p>
+              <p class="card-text">Name : {{f.name}}</p>
+              <p class="card-text">Age : {{f.age}}</p>
+              <p class="card-text">Movies : {{f.movies}}</p>
+              <p><img [src] = "f.imgUrl" style="width: 14rem;"></p>
+              <div class="card-footer">
+                <button [disabled]="f.movies > 10" type="button" class = "btn btn-info" [class.bg-warning]="f.movies > 5"(click) = "addMovie(f)">Add Movies</button>
+              </div>
+              
+            </div>
+          </div>
+          
+          
+        
+      </div>
+    </div>
+  </div>
+
+<br><br><br>
+
+
+    <div class="row">
+      <div class="col-md-12">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Image</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                [class.bg-success] = "f.active"
+                [class.bg-primary] = "!f.active" 
+                *ngFor="let f of fav">
+                  <th scope="row">{{f.id}}</th>
+                  <td>{{f.name}}</td>
+                  <td>{{f.age}}</td>
+                  <td><img [src] = "f.imgUrl" style="width: 14rem;"></td>
+                  <td><p *ngIf="f.active" class = "badge badge-primary">Active</p></td>
+                </tr>
+                
+              </tbody>
+            </table>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #elseTemplate>
+    <h3>No info to display</h3>
+  </ng-template>
+
+<router-outlet></router-outlet>
